@@ -1,0 +1,944 @@
+/* ==========================================================
+   1. FUENTES
+   Poppins (títulos) e Inter (texto) desde Google Fonts.
+   Si no hay internet, cae a system-ui.
+   ========================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap");
+
+/* ==========================================================
+   2. VARIABLES (paleta, fuentes, radios, sombras)
+   ========================================================== */
+:root {
+  /* Color de cada sección (+ versión oscura para el hover) */
+  --animales: #F39C12;
+  --animales-oscuro: #D68910;
+  --animales-suave: #FEF3DC;
+
+  --plantas: #27AE60;
+  --plantas-oscuro: #1E8E4E;
+  --plantas-suave: #E3F6EA;
+
+  --cuerpo: #E74C3C;
+  --cuerpo-oscuro: #C73B2C;
+  --cuerpo-suave: #FDE7E4;
+
+  /* Neutros */
+  --fondo: #F7F8FA;
+  --superficie: #FFFFFF;
+  --texto: #2C3440;
+  --texto-suave: #6B7480;
+  --borde: #E6E9EE;
+  --error: #D32F2F;
+  --error-oscuro: #B71C1C;
+
+  /* Color activo: cada sección lo redefine más abajo */
+  --color: #5B6B7F;
+  --color-oscuro: #46556A;
+  --color-suave: #EEF1F5;
+
+  /* Tipografías */
+  --fuente-titulos: "Poppins", system-ui, sans-serif;
+  --fuente-texto: "Inter", system-ui, sans-serif;
+
+  /* Forma y sombras */
+  --radio: 18px;
+  --radio-chico: 12px;
+  --sombra: 0 6px 18px rgba(30, 40, 60, 0.08);
+  --sombra-hover: 0 12px 26px rgba(30, 40, 60, 0.14);
+  --transicion: 0.2s ease;
+}
+
+/* ==========================================================
+   3. BASE Y RESET
+   ========================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom)); /* lugar para la barra inferior */
+  overflow-x: clip;                                         /* red de seguridad: sin scroll horizontal */
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 0.5rem;
+  font-family: var(--fuente-titulos);
+  line-height: 1.25;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+}
+
+/* ==========================================================
+   4. ENCABEZADO
+   ========================================================== */
+.encabezado {
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+  padding: 0.9rem 1rem;
+}
+
+.encabezado-contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.encabezado-accion {
+  white-space: nowrap;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.logo::before {
+  content: "🧭 ";
+}
+
+/* ==========================================================
+   5. VISTAS (portada y secciones)
+   Solo se muestra la que tiene .vista-activa.
+   ========================================================== */
+.vista {
+  display: none;
+}
+
+.vista-activa {
+  display: block;
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cada sección redefine el color activo con su propia paleta */
+#animales {
+  --color: var(--animales);
+  --color-oscuro: var(--animales-oscuro);
+  --color-suave: var(--animales-suave);
+}
+
+#plantas {
+  --color: var(--plantas);
+  --color-oscuro: var(--plantas-oscuro);
+  --color-suave: var(--plantas-suave);
+}
+
+#cuerpo-humano {
+  --color: var(--cuerpo);
+  --color-oscuro: var(--cuerpo-oscuro);
+  --color-suave: var(--cuerpo-suave);
+}
+
+/* ==========================================================
+   6. PORTADA Y TARJETAS GRANDES
+   ========================================================== */
+.portada-intro {
+  text-align: center;
+  padding: 1rem 0 1.5rem;
+}
+
+.portada-intro h1 {
+  font-size: 1.75rem;
+}
+
+.portada-intro p {
+  color: var(--texto-suave);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.tarjeta {
+  --color: #5B6B7F;
+  --color-suave: #EEF1F5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 1.5rem;
+  text-align: left;
+  font: inherit;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-top: 6px solid var(--color);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.tarjeta[data-ir="animales"]      { --color: var(--animales); --color-suave: var(--animales-suave); }
+.tarjeta[data-ir="plantas"]       { --color: var(--plantas);  --color-suave: var(--plantas-suave); }
+.tarjeta[data-ir="cuerpo-humano"] { --color: var(--cuerpo);   --color-suave: var(--cuerpo-suave); }
+
+.tarjeta:hover,
+.tarjeta:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-hover);
+}
+
+.tarjeta-icono {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  font-size: 2.2rem;
+  background: var(--color-suave);
+  border-radius: 50%;
+}
+
+.tarjeta h2 {
+  margin: 0.5rem 0 0;
+  font-size: 1.4rem;
+  color: var(--color);
+}
+
+.tarjeta p {
+  margin: 0;
+  color: var(--texto-suave);
+}
+
+.tarjeta-accion {
+  margin-top: 0.75rem;
+  padding: 0.45rem 1.1rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+  background: var(--color);
+  border-radius: 999px;
+  transition: filter var(--transicion);
+}
+
+.tarjeta:hover .tarjeta-accion {
+  filter: brightness(0.9);
+}
+
+.tarjeta-accion::after {
+  content: " →";
+}
+
+/* ==========================================================
+   7. CABECERA DE CADA SECCIÓN
+   ========================================================== */
+.seccion-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.seccion-cabecera .btn-filtro {
+  margin-left: auto;
+}
+
+.seccion-cabecera h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--color);
+}
+
+#animales .seccion-cabecera h2::before      { content: "🦁 "; }
+#plantas .seccion-cabecera h2::before       { content: "🌿 "; }
+#cuerpo-humano .seccion-cabecera h2::before { content: "🫀 "; }
+
+/* ==========================================================
+   8. BOTONES (volver, anterior/siguiente, exportar/importar)
+   Hover: cambio de color + leve elevación.
+   ========================================================== */
+.btn,
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.65rem 1.25rem;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: var(--color);
+  border: 2px solid var(--color);
+  border-radius: 999px;
+  box-shadow: 0 3px 8px rgba(30, 40, 60, 0.12);
+  cursor: pointer;
+  transition: background var(--transicion), border-color var(--transicion),
+              transform var(--transicion), box-shadow var(--transicion);
+}
+
+.btn:hover,
+.btn-volver:hover {
+  background: var(--color-oscuro);
+  border-color: var(--color-oscuro);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-hover);
+}
+
+.btn:active,
+.btn-volver:active {
+  transform: translateY(0);
+}
+
+/* Botón Volver: versión "contorno" del color de la sección */
+.btn-volver {
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color);
+  background: var(--superficie);
+}
+
+.btn-volver:hover {
+  color: #fff;
+}
+
+/* Botones neutros del pie */
+.btn-secundario {
+  --color: #4A5568;
+  --color-oscuro: #2C3440;
+}
+
+/* Accesibilidad: foco visible */
+.btn:focus-visible,
+.btn-volver:focus-visible,
+.tarjeta:focus-visible {
+  outline: 3px solid var(--color);
+  outline-offset: 3px;
+}
+
+/* ==========================================================
+   9. CUERPO DE LA SECCIÓN (visor + ficha)
+   Mobile: una columna. Desde 768 px: dos columnas.
+   ========================================================== */
+.seccion-cuerpo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ==========================================================
+   10. VISOR 3D
+   Recuadro grande, esquinas redondeadas y fondo degradado suave.
+   ========================================================== */
+.visor {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--color-suave) 0%, #FFFFFF 55%, var(--color-suave) 100%);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+/* Mientras esté vacío, muestra una indicación */
+.visor:empty::before {
+  content: "🧊 Acá va a aparecer el modelo 3D";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  color: var(--texto-suave);
+  font-weight: 500;
+}
+
+/* <model-viewer> ocupa todo el visor y deja ver el degradado de fondo */
+.visor model-viewer {
+  display: block;
+  width: 100%;
+  height: 100%;
+  --poster-color: transparent;
+  background: transparent;
+}
+
+/* El canvas que cree la librería 3D ocupa todo el visor */
+.visor canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================
+   11. FICHA INFORMATIVA (tarjeta)
+   ========================================================== */
+.ficha {
+  padding: 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-left: 6px solid var(--color);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.ficha-titulo {
+  font-size: 1.4rem;
+  color: var(--color);
+}
+
+.ficha-descripcion {
+  color: var(--texto);
+}
+
+.ficha h4 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1rem;
+  color: var(--color);
+}
+
+.ficha h4::before {
+  content: "💡 ";
+}
+
+/* Datos curiosos: cada ítem es una mini tarjeta */
+.ficha-datos {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ficha-datos li {
+  padding: 0.7rem 0.9rem;
+  background: var(--color-suave);
+  border-radius: var(--radio-chico);
+  box-shadow: 0 2px 6px rgba(30, 40, 60, 0.06);
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.ficha-datos li:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra);
+}
+
+.ficha-creditos {
+  margin: 1rem 0 0;
+  padding-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+  border-top: 1px dashed var(--borde);
+}
+
+.ficha-creditos:not(:empty)::before {
+  content: "🎨 ";
+}
+
+/* ==========================================================
+   12. NAVEGACIÓN (Anterior / contador / Siguiente)
+   ========================================================== */
+.navegacion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.contador {
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  color: var(--color);
+}
+
+/* ==========================================================
+   13. PIE (Exportar / Importar)
+   ========================================================== */
+.pie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem;
+  background: var(--superficie);
+  border-top: 1px solid var(--borde);
+  text-align: center;
+}
+
+.pie-texto {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.pie-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+#btn-exportar::before { content: "⬇️"; }
+#btn-importar::before { content: "⬆️"; }
+
+/* Mensajes de Exportar / Importar (éxito en verde, error en rojo) */
+.pie-mensaje {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.pie-mensaje:empty {
+  display: none;
+}
+
+.pie-mensaje--ok {
+  color: var(--plantas-oscuro);
+}
+
+.pie-mensaje--error {
+  color: var(--error);
+}
+
+/* ==========================================================
+   13a. PROGRESO, VISTAS Y FAVORITAS
+   ========================================================== */
+
+/* Contador "2 de 3 vistas" en cada tarjeta de la portada */
+.tarjeta-progreso {
+  margin-top: 0.25rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color);
+  background: var(--color-suave);
+  border-radius: 999px;
+}
+
+/* Fila superior de la ficha: sello de vista + botón favorito */
+.ficha-estado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.ficha-vista {
+  padding: 0.2rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--plantas-oscuro);
+  background: var(--plantas-suave);
+  border-radius: 999px;
+}
+
+/* Botón favorito y filtro: contorno; relleno dorado cuando está activo */
+.btn-favorito,
+.btn-filtro {
+  color: var(--color);
+  background: var(--superficie);
+}
+
+.btn-favorito:hover,
+.btn-filtro:hover {
+  color: var(--color-oscuro);
+  background: var(--color-suave);
+}
+
+.btn-favorito[aria-pressed="true"],
+.btn-filtro[aria-pressed="true"] {
+  color: #3A2E00;
+  background: #FFC107;
+  border-color: #FFC107;
+}
+
+.btn-favorito[aria-pressed="true"]:hover,
+.btn-filtro[aria-pressed="true"]:hover {
+  background: #FFB300;
+  border-color: #FFB300;
+}
+
+.btn-favorito:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.portada-intro .btn-filtro {
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================
+   13b. GESTIÓN DE FICHAS (formulario, errores y lista)
+   ========================================================== */
+.gestion-cuerpo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.formulario,
+.lista-bloque {
+  padding: 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.formulario h3,
+.lista-bloque h3 {
+  font-size: 1.2rem;
+  color: var(--color);
+}
+
+.campo {
+  margin-bottom: 1rem;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 0.8rem;
+  font: inherit; /* 1rem = 16 px: evita el zoom automático de iOS al enfocar */
+  color: var(--texto);
+  background: var(--fondo);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio-chico);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.campo textarea {
+  resize: vertical;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: var(--color);
+  box-shadow: 0 0 0 3px var(--color-suave);
+}
+
+/* Campo con error: borde rojo */
+.campo .campo-invalido {
+  border-color: var(--error);
+}
+
+/* Mensaje de error en rojo, debajo del campo */
+.error {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--error);
+}
+
+.error:empty {
+  display: none;
+}
+
+.mensaje-ok {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--plantas-oscuro);
+}
+
+.mensaje-ok:empty {
+  display: none;
+}
+
+.formulario-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Lista de fichas existentes: cada ficha es una tarjeta */
+.lista-fichas {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.item-ficha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-left: 6px solid var(--color-item, var(--color));
+  border-radius: var(--radio-chico);
+  box-shadow: 0 2px 6px rgba(30, 40, 60, 0.06);
+}
+
+.item-ficha[data-seccion="animales"]      { --color-item: var(--animales); }
+.item-ficha[data-seccion="plantas"]       { --color-item: var(--plantas); }
+.item-ficha[data-seccion="cuerpo-humano"] { --color-item: var(--cuerpo); }
+
+.item-info strong {
+  display: block;
+  font-family: var(--fuente-titulos);
+}
+
+.item-info span {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+.item-acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-chico {
+  min-height: 44px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.btn-peligro {
+  --color: var(--error);
+  --color-oscuro: var(--error-oscuro);
+}
+
+.lista-vacia {
+  margin: 0;
+  color: var(--texto-suave);
+}
+
+@media (min-width: 768px) {
+  .gestion-cuerpo {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ==========================================================
+   13c. AJUSTES PARA CELULAR
+   ========================================================== */
+
+/* Sin retardo ni zoom por doble toque en los botones */
+button {
+  touch-action: manipulation;
+}
+
+/* Sin scroll horizontal: un hijo de grilla con texto largo (URL, título)
+   no puede achicarse por defecto; min-width: 0 se lo permite y
+   overflow-wrap parte las palabras que no entran. */
+.seccion-cuerpo > *,
+.gestion-cuerpo > *,
+.tarjetas > * {
+  min-width: 0;
+}
+
+.ficha,
+.item-info,
+.pie-mensaje,
+.tarjeta {
+  overflow-wrap: anywhere;
+}
+
+model-viewer,
+canvas,
+img {
+  max-width: 100%;
+}
+
+/* Anterior / contador / Siguiente entran en 320 px */
+.navegacion .btn {
+  padding-inline: 1rem;
+}
+
+/* En celular el acceso a "Gestionar fichas" vive en la barra de abajo */
+.encabezado-accion {
+  display: none;
+}
+
+/* Barra de navegación fija abajo, al alcance del pulgar */
+.barra-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--superficie);
+  border-top: 1px solid var(--borde);
+  box-shadow: 0 -4px 14px rgba(30, 40, 60, 0.08);
+}
+
+.barra-item {
+  --c: #5B6B7F;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  min-width: 0;
+  min-height: 56px;
+  padding: 0.35rem 0.1rem;
+  font-family: var(--fuente-texto);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--texto-suave);
+  background: transparent;
+  border: 0;
+  border-top: 3px solid transparent;
+  cursor: pointer;
+}
+
+.barra-icono {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.barra-item[data-ir="animales"]      { --c: var(--animales); }
+.barra-item[data-ir="plantas"]       { --c: var(--plantas); }
+.barra-item[data-ir="cuerpo-humano"] { --c: var(--cuerpo); }
+
+.barra-item:focus-visible {
+  outline: 3px solid var(--c);
+  outline-offset: -3px;
+}
+
+/* Ítem activo: según la vista que esté abierta (sin JavaScript) */
+body:has(#portada.vista-activa) .barra-item[data-ir="portada"],
+body:has(#animales.vista-activa) .barra-item[data-ir="animales"],
+body:has(#plantas.vista-activa) .barra-item[data-ir="plantas"],
+body:has(#cuerpo-humano.vista-activa) .barra-item[data-ir="cuerpo-humano"],
+body:has(#gestionar.vista-activa) .barra-item[data-ir="gestionar"] {
+  font-weight: 700;
+  color: var(--texto);
+  border-top-color: var(--c);
+}
+
+/* Con el teclado abierto la barra taparía el formulario: se oculta */
+body:has(input:focus, textarea:focus, select:focus) .barra-nav {
+  display: none;
+}
+
+/* Desde 600 px: vuelve el botón del encabezado y se quita la barra */
+@media (min-width: 600px) {
+  body {
+    padding-bottom: 0;
+  }
+
+  .barra-nav {
+    display: none;
+  }
+
+  .encabezado-accion {
+    display: inline-flex;
+  }
+}
+
+/* ==========================================================
+   14. RESPONSIVE (mobile first)
+   Lo de arriba es para celular; acá se amplía para pantallas mayores.
+   ========================================================== */
+@media (min-width: 768px) {
+  main {
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .portada-intro h1 {
+    font-size: 2.25rem;
+  }
+
+  /* Portada: dos columnas */
+  .tarjetas {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Sección: visor a un lado, ficha al otro */
+  .seccion-cuerpo {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .visor {
+    aspect-ratio: 1 / 1;
+    min-height: 420px;
+  }
+
+  .pie {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    text-align: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Portada: las tres tarjetas en una fila */
+  .tarjetas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Respeta a quienes prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorá en 3D</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="encabezado-contenido">
+      <a href="#portada" class="logo" data-ir="portada">Explorá en 3D</a>
+      <button type="button" class="btn-volver encabezado-accion" data-ir="gestionar">✏️ Gestionar fichas</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PORTADA -->
+    <section id="portada" class="vista vista-activa" aria-labelledby="titulo-portada">
+      <div class="portada-intro">
+        <h1 id="titulo-portada">Aprendé explorando en 3D</h1>
+        <p>Elegí una sección y descubrí modelos para mirar desde todos los ángulos.</p>
+        <button type="button" class="btn btn-filtro" data-filtro-favoritas aria-pressed="false">⭐ Ver solo favoritas</button>
+      </div>
+
+      <div class="tarjetas">
+        <button type="button" class="tarjeta" data-ir="animales">
+          <span class="tarjeta-icono" aria-hidden="true">🦁</span>
+          <h2>Animales</h2>
+          <p>Conocé a los habitantes del planeta, sus hábitats y sus rarezas.</p>
+          <span class="tarjeta-progreso" id="progreso-animales"></span>
+          <span class="tarjeta-accion">Entrar</span>
+        </button>
+
+        <button type="button" class="tarjeta" data-ir="plantas">
+          <span class="tarjeta-icono" aria-hidden="true">🌿</span>
+          <h2>Plantas</h2>
+          <p>Descubrí cómo crecen, se alimentan y se reproducen las plantas.</p>
+          <span class="tarjeta-progreso" id="progreso-plantas"></span>
+          <span class="tarjeta-accion">Entrar</span>
+        </button>
+
+        <button type="button" class="tarjeta" data-ir="cuerpo-humano">
+          <span class="tarjeta-icono" aria-hidden="true">🫀</span>
+          <h2>Cuerpo humano</h2>
+          <p>Recorré órganos y sistemas para entender cómo funcionamos.</p>
+          <span class="tarjeta-progreso" id="progreso-cuerpo-humano"></span>
+          <span class="tarjeta-accion">Entrar</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ANIMALES -->
+    <section id="animales" class="vista" data-seccion="animales" aria-labelledby="titulo-animales">
+      <div class="seccion-cabecera">
+        <button type="button" class="btn-volver" data-ir="portada">← Volver</button>
+        <h2 id="titulo-animales">Animales</h2>
+        <button type="button" class="btn btn-chico btn-filtro" data-filtro-favoritas aria-pressed="false">⭐ Ver solo favoritas</button>
+      </div>
+
+      <div class="seccion-cuerpo">
+        <div class="visor" id="visor-animales">
+          <model-viewer
+            src="modelos/Leon.glb"
+            alt="Modelo 3D de un león macho con melena, de pie, que se puede girar para verlo desde todos los lados"
+            camera-controls
+            auto-rotate
+            touch-action="pan-y"
+            camera-orbit="0deg 75deg auto"
+            shadow-intensity="1"
+            environment-image="neutral">
+          </model-viewer>
+        </div>
+
+        <article class="ficha" id="ficha-animales">
+          <div class="ficha-estado">
+            <span class="ficha-vista" hidden>✓ Vista</span>
+            <button type="button" class="btn btn-chico btn-favorito" data-favorito data-seccion="animales" aria-pressed="false">⭐ Favorito</button>
+          </div>
+          <h3 class="ficha-titulo"></h3>
+          <p class="ficha-descripcion"></p>
+          <h4>Datos curiosos</h4>
+          <ul class="ficha-datos"></ul>
+          <p class="ficha-creditos"></p>
+        </article>
+      </div>
+
+      <div class="navegacion">
+        <button type="button" class="btn" data-nav="anterior" data-seccion="animales">← Anterior</button>
+        <span class="contador" id="contador-animales" aria-live="polite"></span>
+        <button type="button" class="btn" data-nav="siguiente" data-seccion="animales">Siguiente →</button>
+      </div>
+    </section>
+
+    <!-- PLANTAS -->
+    <section id="plantas" class="vista" data-seccion="plantas" aria-labelledby="titulo-plantas">
+      <div class="seccion-cabecera">
+        <button type="button" class="btn-volver" data-ir="portada">← Volver</button>
+        <h2 id="titulo-plantas">Plantas</h2>
+        <button type="button" class="btn btn-chico btn-filtro" data-filtro-favoritas aria-pressed="false">⭐ Ver solo favoritas</button>
+      </div>
+
+      <div class="seccion-cuerpo">
+        <div class="visor" id="visor-plantas" role="img" aria-label="Visor 3D de plantas"></div>
+
+        <article class="ficha" id="ficha-plantas">
+          <div class="ficha-estado">
+            <span class="ficha-vista" hidden>✓ Vista</span>
+            <button type="button" class="btn btn-chico btn-favorito" data-favorito data-seccion="plantas" aria-pressed="false">⭐ Favorito</button>
+          </div>
+          <h3 class="ficha-titulo"></h3>
+          <p class="ficha-descripcion"></p>
+          <h4>Datos curiosos</h4>
+          <ul class="ficha-datos"></ul>
+          <p class="ficha-creditos"></p>
+        </article>
+      </div>
+
+      <div class="navegacion">
+        <button type="button" class="btn" data-nav="anterior" data-seccion="plantas">← Anterior</button>
+        <span class="contador" id="contador-plantas" aria-live="polite"></span>
+        <button type="button" class="btn" data-nav="siguiente" data-seccion="plantas">Siguiente →</button>
+      </div>
+    </section>
+
+    <!-- CUERPO HUMANO -->
+    <section id="cuerpo-humano" class="vista" data-seccion="cuerpo-humano" aria-labelledby="titulo-cuerpo-humano">
+      <div class="seccion-cabecera">
+        <button type="button" class="btn-volver" data-ir="portada">← Volver</button>
+        <h2 id="titulo-cuerpo-humano">Cuerpo humano</h2>
+        <button type="button" class="btn btn-chico btn-filtro" data-filtro-favoritas aria-pressed="false">⭐ Ver solo favoritas</button>
+      </div>
+
+      <div class="seccion-cuerpo">
+        <div class="visor" id="visor-cuerpo-humano" role="img" aria-label="Visor 3D del cuerpo humano"></div>
+
+        <article class="ficha" id="ficha-cuerpo-humano">
+          <div class="ficha-estado">
+            <span class="ficha-vista" hidden>✓ Vista</span>
+            <button type="button" class="btn btn-chico btn-favorito" data-favorito data-seccion="cuerpo-humano" aria-pressed="false">⭐ Favorito</button>
+          </div>
+          <h3 class="ficha-titulo"></h3>
+          <p class="ficha-descripcion"></p>
+          <h4>Datos curiosos</h4>
+          <ul class="ficha-datos"></ul>
+          <p class="ficha-creditos"></p>
+        </article>
+      </div>
+
+      <div class="navegacion">
+        <button type="button" class="btn" data-nav="anterior" data-seccion="cuerpo-humano">← Anterior</button>
+        <span class="contador" id="contador-cuerpo-humano" aria-live="polite"></span>
+        <button type="button" class="btn" data-nav="siguiente" data-seccion="cuerpo-humano">Siguiente →</button>
+      </div>
+    </section>
+
+    <!-- GESTIONAR FICHAS -->
+    <section id="gestionar" class="vista" aria-labelledby="titulo-gestionar">
+      <div class="seccion-cabecera">
+        <button type="button" class="btn-volver" data-ir="portada">← Volver</button>
+        <h2 id="titulo-gestionar">Gestionar fichas</h2>
+      </div>
+
+      <div class="gestion-cuerpo">
+
+        <form id="form-ficha" class="formulario" novalidate>
+          <h3 id="form-titulo">Nueva ficha</h3>
+          <input type="hidden" id="ficha-id">
+
+          <div class="campo">
+            <label for="campo-seccion">Sección *</label>
+            <select id="campo-seccion" aria-describedby="error-seccion">
+              <option value="">Elegí una sección…</option>
+              <option value="animales">Animales</option>
+              <option value="cuerpo-humano">Cuerpo humano</option>
+              <option value="plantas">Plantas</option>
+            </select>
+            <p class="error" id="error-seccion" role="alert"></p>
+          </div>
+
+          <div class="campo">
+            <label for="campo-titulo">Título *</label>
+            <input type="text" id="campo-titulo" autocomplete="off" aria-describedby="error-titulo">
+            <p class="error" id="error-titulo" role="alert"></p>
+          </div>
+
+          <div class="campo">
+            <label for="campo-modelo">Ruta del modelo *</label>
+            <input type="text" id="campo-modelo" placeholder="modelos/leon.glb" autocomplete="off" aria-describedby="error-modelo">
+            <p class="error" id="error-modelo" role="alert"></p>
+          </div>
+
+          <div class="campo">
+            <label for="campo-descripcion">Descripción *</label>
+            <textarea id="campo-descripcion" rows="4" aria-describedby="error-descripcion"></textarea>
+            <p class="error" id="error-descripcion" role="alert"></p>
+          </div>
+
+          <div class="campo">
+            <label for="campo-datos">Datos curiosos (uno por línea)</label>
+            <textarea id="campo-datos" rows="3"></textarea>
+          </div>
+
+          <div class="campo">
+            <label for="campo-autor">Autor del modelo *</label>
+            <input type="text" id="campo-autor" autocomplete="off" aria-describedby="error-autor">
+            <p class="error" id="error-autor" role="alert"></p>
+          </div>
+
+          <div class="campo">
+            <label for="campo-licencia">Licencia *</label>
+            <input type="text" id="campo-licencia" placeholder="CC BY 4.0" autocomplete="off" aria-describedby="error-licencia">
+            <p class="error" id="error-licencia" role="alert"></p>
+          </div>
+
+          <div class="campo">
+            <label for="campo-fuente">Fuente (enlace o sitio)</label>
+            <input type="text" id="campo-fuente" autocomplete="off">
+          </div>
+
+          <p class="mensaje-ok" id="form-mensaje" role="status"></p>
+
+          <div class="formulario-acciones">
+            <button type="submit" class="btn">💾 Guardar ficha</button>
+            <button type="button" class="btn btn-secundario" id="btn-cancelar-edicion" hidden>Cancelar edición</button>
+          </div>
+        </form>
+
+        <div class="lista-bloque">
+          <h3>Fichas existentes</h3>
+          <div class="lista-fichas" id="lista-fichas"></div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <div class="pie-info">
+      <p class="pie-texto">Tus datos se guardan en este navegador.</p>
+      <p class="pie-mensaje" id="pie-mensaje" role="status" aria-live="polite"></p>
+    </div>
+    <div class="pie-acciones">
+      <button type="button" class="btn btn-secundario" id="btn-exportar">Exportar</button>
+      <button type="button" class="btn btn-secundario" id="btn-importar">Importar</button>
+      <input type="file" id="input-importar" accept="application/json,.json" hidden>
+    </div>
+  </footer>
+
+  <!-- Menú inferior: se ve solo en celulares (menos de 600 px) -->
+  <nav class="barra-nav" aria-label="Menú principal">
+    <button type="button" class="barra-item" data-ir="portada">
+      <span class="barra-icono" aria-hidden="true">🏠</span><span>Inicio</span>
+    </button>
+    <button type="button" class="barra-item" data-ir="animales">
+      <span class="barra-icono" aria-hidden="true">🦁</span><span>Animales</span>
+    </button>
+    <button type="button" class="barra-item" data-ir="plantas">
+      <span class="barra-icono" aria-hidden="true">🌿</span><span>Plantas</span>
+    </button>
+    <button type="button" class="barra-item" data-ir="cuerpo-humano">
+      <span class="barra-icono" aria-hidden="true">🫀</span><span>Cuerpo</span>
+    </button>
+    <button type="button" class="barra-item" data-ir="gestionar">
+      <span class="barra-icono" aria-hidden="true">✏️</span><span>Fichas</span>
+    </button>
+  </nav>
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
